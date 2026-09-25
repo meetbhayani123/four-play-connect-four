@@ -65,8 +65,18 @@
     gameView.classList.add('hidden'); lobby.classList.remove('hidden');
   });
 
+  function playColumn(col) {
+    if (!state || state.status !== 'playing' || mySlot !== state.turn) return;
+    if (state.board[0][col] !== null) return showToast('That column is full. Choose another one.');
+    socket.emit('move', col);
+  }
+
   picksEl.innerHTML = Array.from({ length: 7 }, (_, col) => `<button type="button" aria-label="Drop disc in column ${col + 1}" title="Column ${col + 1}">${col + 1}</button>`).join('');
-  [...picksEl.children].forEach((button, col) => button.addEventListener('click', () => socket.emit('move', col)));
+  [...picksEl.children].forEach((button, col) => button.addEventListener('click', () => playColumn(col)));
+  boardEl.addEventListener('click', event => {
+    const cell = event.target.closest('.cell');
+    if (cell) playColumn(Number(cell.dataset.column));
+  });
 
   socket.on('joined', ({ code, token, slot }) => {
     localStorage.setItem('fourplay-token', token);
@@ -106,6 +116,7 @@
     state.board.forEach((row, r) => row.forEach((cell, c) => {
       const el = document.createElement('div');
       el.className = `cell${cell === 0 ? ' red' : cell === 1 ? ' yellow' : ''}`;
+      el.dataset.column = c;
       el.setAttribute('role', 'gridcell');
       el.setAttribute('aria-label', `Row ${r + 1}, column ${c + 1}${cell === null ? ', empty' : `, ${state.players[cell]?.name || `Player ${cell + 1}`}`}`);
       boardEl.appendChild(el);
