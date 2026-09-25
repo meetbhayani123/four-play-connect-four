@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2ea">
+  <title>Four in a Row — Connect Four</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>FOUR<span class="brand-muted">/</span>PLAY</span></a>
+      <div class="live-label"><span class="live-dot"></span> LIVE MULTIPLAYER</div>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow"><span>THE CLASSIC, TOGETHER</span><span class="eyebrow-line"></span></div>
+      <h1>Four in a <span>row.</span></h1>
+      <p class="intro">A little strategy goes a long way. Invite someone and see who connects first.</p>
+    </section>
+
+    <section class="lobby panel" id="lobby">
+      <div class="lobby-copy">
+        <div class="section-kicker">START A MATCH</div>
+        <h2>Make your move.</h2>
+        <p>Create a room and send the invite to your opponent.</p>
+      </div>
+      <div class="lobby-actions">
+        <label class="field-label" for="player-name">YOUR NAME</label>
+        <input id="player-name" class="text-input" maxlength="18" placeholder="e.g. Alex" autocomplete="nickname">
+        <button id="create-button" class="button button-primary">Create a room <span aria-hidden="true">↗</span></button>
+        <div class="join-divider"><span>OR JOIN A ROOM</span></div>
+        <div class="join-row"><input id="room-code" class="text-input code-input" maxlength="5" placeholder="ROOM CODE" aria-label="Room code"><button id="join-button" class="button button-secondary">Join <span aria-hidden="true">→</span></button></div>
+      </div>
+    </section>
+
+    <section class="game-layout hidden" id="game-view">
+      <div class="game-main panel">
+        <div class="game-topline"><div class="room-info"><span class="section-kicker">ROOM</span><strong id="room-code-display">—</strong></div><button class="copy-button" id="share-button"><span aria-hidden="true">↗</span> Copy invite link</button></div>
+        <div class="turn-banner" id="turn-banner"><span class="turn-disc"></span><span id="turn-text">Waiting for a player…</span></div>
+        <div class="board-wrap"><div class="column-picks" id="column-picks" aria-label="Choose a column"></div><div class="board" id="board" role="grid" aria-label="Connect Four board"></div></div>
+        <div class="player-strip"><div class="player-card" id="player-card-0"><span class="player-token red-token"></span><span><small>PLAYER 1</small><strong id="player-name-0">Waiting…</strong></span><span class="player-presence" id="presence-0"></span></div><span class="versus">VS</span><div class="player-card" id="player-card-1"><span class="player-token yellow-token"></span><span><small>PLAYER 2</small><strong id="player-name-1">Waiting…</strong></span><span class="player-presence" id="presence-1"></span></div></div>
+        <div class="game-actions hidden" id="game-actions"><button class="button button-primary" id="play-again">Play again <span aria-hidden="true">↻</span></button><button class="text-button" id="new-room">Start a new room</button></div>
+      </div>
+      <aside class="side-column">
+        <div class="how-card panel"><div class="side-icon">✳</div><div class="section-kicker">QUICK GUIDE</div><h3>How to play</h3><ol><li><span>01</span><p>Take turns dropping your colored disc into one of the 7 columns.</p></li><li><span>02</span><p>Your disc falls to the lowest empty spot in that column.</p></li><li><span>03</span><p>Connect 4 in a row — across, up and down, or diagonally — to win.</p></li><li><span>04</span><p>If the board fills before anyone connects four, it’s a draw.</p></li></ol></div>
+        <div class="tip-card"><span>✦</span><p><strong>Good to know</strong><br>Your opponent can join from any device with the room link or 5-letter code.</p></div>
+      </aside>
+    </section>
+
+    <footer><span>MADE FOR TWO, PLAYED ANYWHERE</span><span>DROP · CONNECT · WIN</span></footer>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/game.js"></script>
+</body>
+</html>
