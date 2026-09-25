@@ -13,6 +13,8 @@ To test across devices on the same Wi-Fi, open the app using your computer's loc
 
 ## Deploy to Render
 
-Create a GitHub repository containing this project, then on Render choose **New + → Web Service**, connect the repository, select **Node** as the runtime, use `npm install` for Build Command and `npm start` for Start Command. The free web service may sleep when idle; the next visit can take a short time to start.
+This project includes a `render.yaml` Blueprint. On the Render Dashboard, choose **New → Blueprint**, connect this GitHub repository, then select **Deploy Blueprint**. Render reads the file and creates the Node.js web service with the included settings. When deployment finishes, open the service's `onrender.com` URL.
+
+The free service can spin down after 15 minutes without traffic and may take about a minute to wake for the next visitor. Rooms are stored in server memory, so an ongoing game is cleared if the service restarts or spins down.
 
 Room state lives in server memory. This is appropriate for a challenge/demo on one web service; rooms disappear when the service restarts. Keep a single running instance unless room storage is moved to a shared database.
